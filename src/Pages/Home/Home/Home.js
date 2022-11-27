@@ -1,4 +1,5 @@
 import React from "react";
+import BrandSection from "../../Shared/BrandSection/BrandSection";
 import ContactUs from "../../Shared/ContactUs/ContactUs";
 import Banner from "../Banner/Banner";
 import CategoryHome from "../CategoryHome/CategoryHome";
@@ -11,6 +12,7 @@ const Home = () => {
       <div className="container mx-auto">
         <CategoryHome />
         <ProductSectionHome />
+        <BrandSection />
         <ContactUs />
       </div>
     </div>

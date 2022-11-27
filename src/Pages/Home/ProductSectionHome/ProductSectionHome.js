@@ -3,7 +3,7 @@ import ProductCard from "../../Shared/ProductCard/ProductCard";
 
 const ProductSectionHome = () => {
   return (
-    <div className="my-12">
+    <div className="mt-12 mb-24">
       <div className="flex flex-col">
         <h2 className="mb-4 text-2xl font-bold">All</h2>
 
