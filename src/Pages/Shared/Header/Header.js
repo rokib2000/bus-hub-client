@@ -1,10 +1,23 @@
 import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        // Sign-out successful.
+        // localStorage.removeItem("travelerToken");
+        toast.success("Logout Successfully!");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
   const menuItem = (
     <>
@@ -26,9 +39,6 @@ const Header = () => {
       </li>
       <li>
         <Link to="/blog">Blog</Link>
-      </li>
-      <li>
-        <Link to="/">{user?.name}</Link>
       </li>
     </>
   );
@@ -64,13 +74,20 @@ const Header = () => {
           <ul className="menu menu-horizontal p-0">{menuItem}</ul>
         </div>
         <div className="navbar-end">
-          <Link to="/dashboard" className="btn mr-4">
-            Dashboard
-          </Link>
-          <Link to="/login" className="btn btn-primary mr-4">
-            Login
-          </Link>
-          {/* <a className="btn btn-primary mr-4">Logout</a> */}
+          {user?.uid ? (
+            <>
+              <Link to="/dashboard" className="btn mr-4">
+                Dashboard
+              </Link>
+              <button onClick={handleLogout} className="btn btn-primary mr-4">
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="btn btn-primary mr-4">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>
