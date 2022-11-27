@@ -1,9 +1,23 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import Loading from "../../Shared/Loading/Loading";
 
 const AddProduct = () => {
+  const { data: categories = [], isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/categories");
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  //   console.log(categories);
+
   return (
     <div>
       <div className="max-w-2xl mx-auto bg-white p-16">
+        <h2 className="text-3xl font-semibold mb-4">Add Product</h2>
         <form>
           <div className="mb-6">
             <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 ">
@@ -97,6 +111,23 @@ const AddProduct = () => {
                 required
               />
             </div>
+          </div>
+          <div className="mb-6">
+            <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 ">
+              Category
+            </label>
+            <select
+              id="category"
+              name="category"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              required
+            >
+              {categories.map((category) => (
+                <option key={category._id} value={category?.categoryName}>
+                  {category?.categoryName}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-6">
             <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-900 ">
