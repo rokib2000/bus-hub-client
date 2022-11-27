@@ -1,11 +1,15 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../contexts/AuthProvider";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, googleLogin } = useContext(AuthContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname ?? "/";
 
   const handleSignIn = (event) => {
     event.preventDefault();
@@ -20,11 +24,48 @@ const Login = () => {
         const user = userCredential.user;
         console.log(user);
         toast.success("Login successfully");
+        navigate(from, { replace: true });
         form.reset();
       })
       .catch((error) => {
         const errorMessage = error.message;
         toast.error(errorMessage);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const googleUser = result.user;
+        if (googleUser) {
+          console.log(googleUser);
+
+          const name = googleUser.displayName;
+          const email = googleUser.email;
+          const image = googleUser.photoURL;
+          const accountType = "buyer";
+
+          const user = { name, email, image, accountType };
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(user),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+            });
+
+          toast.success("Login successfully");
+          navigate(from, { replace: true });
+        }
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error(errorMessage);
+        console.log(error);
       });
   };
 
@@ -35,7 +76,10 @@ const Login = () => {
           <div className="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">
             Login To Your Account
           </div>
-          <button className="relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200">
+          <button
+            onClick={handleGoogleLogin}
+            className="relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200"
+          >
             <span className="absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500">
               <FaGoogle />
             </span>

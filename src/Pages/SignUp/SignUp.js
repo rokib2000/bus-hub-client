@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const SignUp = () => {
   const { createUser, updateUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname ?? "/";
 
   const imageHostKey = process.env.REACT_APP_IMAGEBB_KEY;
 
@@ -22,7 +25,7 @@ const SignUp = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        toast.success("Account create successfully");
+        // toast.success("Account create successfully");
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -45,6 +48,8 @@ const SignUp = () => {
           updateUserProfile(name, userImage);
           //save data database
           saveUser(name, email, userImage, accountType);
+          toast.success("Account create successfully");
+          navigate(from, { replace: true });
           form.reset();
         }
       });
