@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from "../../contexts/AuthProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+
+  const handleSignIn = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // console.log(email, password);
+
+    signIn(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        toast.success("Login successfully");
+        form.reset();
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error(errorMessage);
+      });
+  };
+
   return (
     <div>
       <div className="min-h-screen flex flex-col items-center justify-center ">
@@ -22,7 +47,7 @@ const Login = () => {
             </div>
           </div>
           <div className="mt-10">
-            <form action="#">
+            <form onSubmit={handleSignIn}>
               <div className="flex flex-col mb-6">
                 <label htmlFor="email" className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">
                   Email Address:
@@ -32,6 +57,7 @@ const Login = () => {
                     id="email"
                     type="email"
                     name="email"
+                    required
                     className="text-sm sm:text-base placeholder-gray-500 pl-4 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="Email Address"
                   />
@@ -46,6 +72,7 @@ const Login = () => {
                     id="password"
                     type="password"
                     name="password"
+                    required
                     className="text-sm sm:text-base placeholder-gray-500 pl-4 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="Password"
                   />

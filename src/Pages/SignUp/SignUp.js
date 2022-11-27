@@ -45,6 +45,7 @@ const SignUp = () => {
           updateUserProfile(name, userImage);
           //save data database
           saveUser(name, email, userImage, accountType);
+          form.reset();
         }
       });
   };
