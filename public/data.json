@@ -1,0 +1,26 @@
+[
+  {
+    "_id": 1,
+    "categoryName": "Ac Bus",
+    "image": "https://i.postimg.cc/4N5x7DSF/acbus.jpg",
+    "icon": "https://img.icons8.com/fluency/48/null/bus.png"
+  },
+  {
+    "_id": 2,
+    "categoryName": "Non-Ac Bus",
+    "image": "https://i.postimg.cc/fWCGxMMX/nonacbus.jpg",
+    "icon": "https://img.icons8.com/plasticine/48/null/bus--v1.png"
+  },
+  {
+    "_id": 3,
+    "categoryName": "Double Decker Bus",
+    "image": "https://i.postimg.cc/PqBXnTCN/doubledeckerbus.jpg",
+    "icon": "https://img.icons8.com/fluency/48/null/tour-bus.png"
+  },
+  {
+    "_id": 4,
+    "categoryName": "Mini Bus",
+    "image": "https://i.postimg.cc/nhXfFNbm/minibus.jpg",
+    "icon": "https://img.icons8.com/cute-clipart/48/null/bus.png"
+  }
+]
