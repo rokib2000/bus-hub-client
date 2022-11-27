@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import Loading from "../../Shared/Loading/Loading";
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
+
+const imageHostKey = process.env.REACT_APP_IMAGEBB_KEY;
 
 const AddProduct = () => {
-  const { data: categories = [], isLoading } = useQuery({
+  const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/categories");
@@ -14,11 +16,73 @@ const AddProduct = () => {
 
   //   console.log(categories);
 
+  const handleProduct = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const title = form.title.value;
+    const location = form.location.value;
+    const useYear = form.useYear.value;
+    const OriginalPrice = form.OriginalPrice.value;
+    const resellPrice = form.resellPrice.value;
+    const condition = form.condition.value;
+    const mobile = form.mobile.value;
+    const category = form.category.value;
+    const description = form.description.value;
+    const image = form.image.files[0];
+
+    // image upload
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+        if (imageData.success) {
+          // console.log(imageData.data.url);
+          const image = imageData.data.url;
+
+          const product = {
+            title,
+            location,
+            useYear,
+            OriginalPrice,
+            resellPrice,
+            condition,
+            mobile,
+            category,
+            description,
+            image,
+          };
+
+          fetch("http://localhost:5000/products", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(product),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.acknowledged) {
+                toast.success("Post Added Successfully");
+                form.reset();
+              }
+            });
+        }
+      });
+
+    console.log(title, location, useYear, OriginalPrice, resellPrice, condition, mobile, category, description, image);
+  };
+
   return (
     <div>
       <div className="max-w-2xl mx-auto bg-white p-16">
         <h2 className="text-3xl font-semibold mb-4">Add Product</h2>
-        <form>
+        <form onSubmit={handleProduct}>
           <div className="mb-6">
             <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 ">
               Product Title
@@ -53,7 +117,7 @@ const AddProduct = () => {
               <input
                 type="number"
                 id="use"
-                name="use"
+                name="useYear"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 placeholder="07"
                 required
