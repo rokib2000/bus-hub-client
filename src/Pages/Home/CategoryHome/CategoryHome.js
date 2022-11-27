@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Shared/Loading/Loading";
 import CategoryHomeCard from "./CategoryHomeCard";
 
-const CategoryHome = () => {
+const CategoryHome = ({ handleCategoryData }) => {
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
@@ -26,7 +26,11 @@ const CategoryHome = () => {
 
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {categories.map((category) => (
-            <CategoryHomeCard key={category._id} category={category}></CategoryHomeCard>
+            <CategoryHomeCard
+              key={category._id}
+              category={category}
+              handleCategoryData={handleCategoryData}
+            ></CategoryHomeCard>
           ))}
         </div>
       </div>
