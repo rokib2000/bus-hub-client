@@ -13,7 +13,7 @@ const CategoryHome = () => {
     },
   });
 
-  console.log(categories);
+  // console.log(categories);
 
   if (isLoading) {
     return <Loading></Loading>;

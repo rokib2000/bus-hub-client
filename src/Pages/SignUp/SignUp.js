@@ -46,6 +46,9 @@ const SignUp = () => {
           // console.log(imageData.data.url);
           const userImage = imageData.data.url;
           updateUserProfile(name, userImage);
+
+          // const userInfo = { displayName: name, photoURL: userImage };
+
           //save data database
           saveUser(name, email, userImage, accountType);
           toast.success("Account create successfully");
