@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.png";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
+
   const menuItem = (
     <>
       <li>
@@ -23,6 +26,9 @@ const Header = () => {
       </li>
       <li>
         <Link to="/blog">Blog</Link>
+      </li>
+      <li>
+        <Link to="/">{user?.name}</Link>
       </li>
     </>
   );
@@ -58,8 +64,8 @@ const Header = () => {
           <ul className="menu menu-horizontal p-0">{menuItem}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn mr-4">Dashboard</a>
-          <a className="btn btn-primary mr-4">Login</a>
+          <Link className="btn mr-4">Dashboard</Link>
+          <Link className="btn btn-primary mr-4">Login</Link>
           {/* <a className="btn btn-primary mr-4">Logout</a> */}
         </div>
       </div>
