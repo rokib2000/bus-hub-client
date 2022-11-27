@@ -7,7 +7,7 @@ const Footer = () => {
     <div className="bg-neutral ">
       <footer className="footer container mx-auto p-10 text-neutral-content">
         <div>
-          <img src={logo} className="h-20" alt="" srcset="" />
+          <img src={logo} className="h-20" alt="" />
           <p>Copyright © 2022 - All right reserved</p>
         </div>
         <div>
