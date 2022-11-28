@@ -14,18 +14,13 @@ const Home = () => {
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
-        setProducts(data);
+        const productsData = data.slice(0, 8);
+        setProducts(productsData);
       });
   }, [categoryName]);
 
   const handleCategoryData = (categoryName) => {
     setCategoryName(categoryName);
-    // fetch(`http://localhost:5000/products?category=${categoryName}`)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     // console.log(data);
-    //     setProducts(data);
-    //   });
   };
 
   return (

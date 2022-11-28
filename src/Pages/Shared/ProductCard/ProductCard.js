@@ -1,10 +1,10 @@
 import React from "react";
-import banner1 from "../../../assets/Banner/banner1.jpg";
+import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {
   const product = props.product;
   console.log(product);
-  const { OriginalPrice, category, condition, image, location, resellPrice, title } = product;
+  const { OriginalPrice, category, condition, image, location, resellPrice, title, useYear, _id } = product;
   return (
     <div>
       <div className="">
@@ -12,24 +12,41 @@ const ProductCard = (props) => {
           <div className="bg-cover bg-center h-56 p-4" style={{ backgroundImage: `url(${image})` }}></div>
 
           <div className="p-4">
-            <p className="uppercase tracking-wide  text-lg font-bold text-gray-700 mb-2">{title}</p>
-            <p className=" text-gray-900 mb-2">
-              <strong>Original Price:</strong> ${OriginalPrice}
-            </p>
-            <p className="text-lg font-semibold text-gray-900">Resell Price: ${resellPrice}</p>
-            <p className="text-gray-700 mb-2">
-              <strong>Location: </strong>
-              {location}
-            </p>
-            <p className="text-gray-700 mb-2">
-              <strong>Condition: </strong>
-              {condition}
-            </p>
-            <p className="text-gray-700 mb-2">
-              <strong>Category: </strong>
-              {category}
-            </p>
-            <button className="btn btn-block btn-primary">Details</button>
+            {/* list start  */}
+
+            <div class=" flex items-center justify-center ">
+              <div class="max-w-4xl   w-full  ">
+                <div class="p-4 border-b">
+                  <h2 class="text-xl ">{title}</h2>
+                  <p class="text-sm text-gray-600">Category: {category}</p>
+                  <p class="text-sm text-gray-600">Location: {location}</p>
+                </div>
+                <div>
+                  <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
+                    <p class="text-gray-600">Original Price</p>
+                    <p>${OriginalPrice}</p>
+                  </div>
+                  <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
+                    <p class="text-gray-600">Resell Price</p>
+                    <p>${resellPrice}</p>
+                  </div>
+                  <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
+                    <p class="text-gray-600">Condition</p>
+                    <p>{condition}</p>
+                  </div>
+                  <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
+                    <p class="text-gray-600">Use</p>
+                    <p>{useYear} Years</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* list end  */}
+
+            <Link to={`/products/${_id}`} className="btn btn-block btn-primary">
+              Details
+            </Link>
           </div>
           {/* <div className="px-4 pt-2 pb-2 border-t border-gray-300 ">
             <div className="text-xs uppercase font-bold text-gray-600 tracking-wide">Seller</div>

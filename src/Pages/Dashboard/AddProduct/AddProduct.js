@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const imageHostKey = process.env.REACT_APP_IMAGEBB_KEY;
 
 const AddProduct = () => {
+  const { user } = useContext(AuthContext);
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
@@ -29,6 +31,13 @@ const AddProduct = () => {
     const category = form.category.value;
     const description = form.description.value;
     const image = form.image.files[0];
+
+    // seller info
+    const sellerName = user?.displayName;
+    const sellerImage = user?.photoURL;
+    const sellerEmail = user?.email;
+
+    const date = new Date();
 
     // image upload
     const formData = new FormData();
@@ -55,6 +64,10 @@ const AddProduct = () => {
             category,
             description,
             image,
+            sellerName,
+            sellerEmail,
+            sellerImage,
+            date,
           };
 
           fetch("http://localhost:5000/products", {
