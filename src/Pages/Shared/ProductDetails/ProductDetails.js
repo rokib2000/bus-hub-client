@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLoaderData } from "react-router-dom";
 import dateFormat from "dateformat";
 import toast from "react-hot-toast";
+import useUser from "../../../hooks/useUser";
+import Loading from "../Loading/Loading";
 
 const ProductDetails = () => {
   const product = useLoaderData();
+
   const {
     OriginalPrice,
     category,
@@ -23,6 +26,10 @@ const ProductDetails = () => {
     _id,
   } = product;
   const postDate = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+
+  const [user, isLoading] = useUser(sellerEmail);
+
+  // console.log(user);
 
   const handleReport = () => {
     const status = "reported";
@@ -45,6 +52,10 @@ const ProductDetails = () => {
       })
       .catch((err) => toast.error(err.message));
   };
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="container mx-auto my-14">
@@ -109,13 +120,15 @@ const ProductDetails = () => {
                   <div>
                     <p className=" text-gray-900 text-lg font-semibold">
                       {sellerName}
-                      <span className="badge badge-xs badge-primary h-5  w-5 p-0 rounded-full absolute -mt-2 ">
-                        <img
-                          src="https://i.postimg.cc/mkVtQkwh/white-tick-removebg-preview.png"
-                          className="h-3"
-                          alt=""
-                        />
-                      </span>
+                      {user?.status && (
+                        <span className="badge badge-xs badge-primary h-5  w-5 p-0 rounded-full absolute -mt-2 ">
+                          <img
+                            src="https://i.postimg.cc/mkVtQkwh/white-tick-removebg-preview.png"
+                            className="h-3"
+                            alt=""
+                          />
+                        </span>
+                      )}
                     </p>
                     <p className="text-sm text-gray-700">{postDate}</p>
                   </div>

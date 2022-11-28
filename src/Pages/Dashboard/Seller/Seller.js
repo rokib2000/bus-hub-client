@@ -1,10 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import Loading from "../../Shared/Loading/Loading";
 
 const Seller = () => {
-  const { data: users = [], isLoading } = useQuery({
+  const {
+    data: users = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/users?role=seller");
@@ -14,6 +19,28 @@ const Seller = () => {
   });
 
   //   console.log(users);
+
+  const handleVerify = (id) => {
+    const status = "verified";
+
+    fetch(`http://localhost:5000/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status: status }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          refetch();
+          toast.success("Verify Successfully");
+        } else {
+          toast.error("Already Verified");
+        }
+      });
+  };
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -71,13 +98,17 @@ const Seller = () => {
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Status
                 </span>
-                <span className="rounded bg-green-400 py-1 px-3 text-xs font-bold">Verified</span>
+                <span className="rounded bg-green-400 py-1 px-3 text-xs font-bold">
+                  {user?.status ? user?.status : "Not verified "}
+                </span>
               </td>
               <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Actions
                 </span>
-                <Link className="text-blue-400 hover:text-blue-600 underline">Edit</Link>
+                <button onClick={() => handleVerify(user?._id)} className="text-blue-400 hover:text-blue-600 underline">
+                  verify
+                </button>
                 <Link className="text-blue-400 hover:text-blue-600 underline pl-6">Remove</Link>
               </td>
             </tr>
