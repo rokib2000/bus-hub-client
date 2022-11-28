@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -6,6 +7,15 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
+
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/categories");
+      const data = await res.json();
+      return data;
+    },
+  });
 
   const handleLogout = () => {
     logOut()
@@ -28,16 +38,18 @@ const Header = () => {
         <Link to="/products">Buses</Link>
       </li>
       <li tabIndex={0}>
-        <Link to="" className="justify-between">
+        <Link to="/products" className="justify-between">
           Bus Category
           <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
           </svg>
         </Link>
         <ul className="p-2  bg-neutral text-neutral-content">
-          <li>
-            <Link to="">Category 1</Link>
-          </li>
+          {categories.map((category) => (
+            <li className="transition duration-300 hover:cursor-pointer hover:translate-x-1">
+              <Link to="/products">{category?.categoryName}</Link>
+            </li>
+          ))}
         </ul>
       </li>
       <li>

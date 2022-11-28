@@ -19,16 +19,19 @@ const DashboardLayout = () => {
               <Link to="/dashboard/addProduct">Add Product</Link>
             </li>
             <li>
-              <Link>Seller</Link>
+              <Link to="/dashboard/myOrder">My Order</Link>
             </li>
             <li>
-              <Link>Buyer</Link>
+              <Link to="/dashboard/orders">Orders</Link>
             </li>
             <li>
-              <Link>My Order</Link>
+              <Link to="/dashboard/seller">Seller</Link>
             </li>
             <li>
-              <Link>Reported Item</Link>
+              <Link to="/dashboard/buyer">Buyer</Link>
+            </li>
+            <li>
+              <Link to="/dashboard/reportedItem">Reported Item</Link>
             </li>
           </ul>
         </div>

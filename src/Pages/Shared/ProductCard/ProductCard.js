@@ -14,28 +14,28 @@ const ProductCard = (props) => {
           <div className="p-4">
             {/* list start  */}
 
-            <div class=" flex items-center justify-center ">
-              <div class="max-w-4xl   w-full  ">
-                <div class="p-4 border-b">
-                  <h2 class="text-xl ">{title}</h2>
-                  <p class="text-sm text-gray-600">Category: {category}</p>
-                  <p class="text-sm text-gray-600">Location: {location}</p>
+            <div className=" flex items-center justify-center ">
+              <div className="max-w-4xl   w-full  ">
+                <div className="p-4 border-b">
+                  <h2 className="text-xl ">{title}</h2>
+                  <p className="text-sm text-gray-600">Category: {category}</p>
+                  <p className="text-sm text-gray-600">Location: {location}</p>
                 </div>
                 <div>
-                  <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
-                    <p class="text-gray-600">Original Price</p>
+                  <div className="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
+                    <p className="text-gray-600">Original Price</p>
                     <p>${OriginalPrice}</p>
                   </div>
-                  <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
-                    <p class="text-gray-600">Resell Price</p>
+                  <div className="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
+                    <p className="text-gray-600">Resell Price</p>
                     <p>${resellPrice}</p>
                   </div>
-                  <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
-                    <p class="text-gray-600">Condition</p>
+                  <div className="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
+                    <p className="text-gray-600">Condition</p>
                     <p>{condition}</p>
                   </div>
-                  <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
-                    <p class="text-gray-600">Use</p>
+                  <div className="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-2">
+                    <p className="text-gray-600">Use</p>
                     <p>{useYear} Years</p>
                   </div>
                 </div>
