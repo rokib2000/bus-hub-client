@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import dateFormat, { masks } from "dateformat";
+import dateFormat from "dateformat";
 import toast from "react-hot-toast";
 
 const ProductDetails = () => {
@@ -21,7 +21,6 @@ const ProductDetails = () => {
     title,
     useYear,
     _id,
-    status,
   } = product;
   const postDate = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
 
@@ -40,6 +39,8 @@ const ProductDetails = () => {
         console.log(data);
         if (data.modifiedCount > 0) {
           toast.success("Report added Successfully");
+        } else {
+          toast.error("Already Reported");
         }
       })
       .catch((err) => toast.error(err.message));
@@ -124,6 +125,7 @@ const ProductDetails = () => {
                 <button onClick={handleReport} className={`btn  btn-error w-full `}>
                   Report
                 </button>
+
                 <button className="btn  btn-primary w-full">Order Now</button>
               </div>
             </div>
