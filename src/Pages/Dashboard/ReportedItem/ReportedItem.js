@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import Loading from "../../Shared/Loading/Loading";
 
 const ReportedItem = () => {
@@ -17,7 +17,24 @@ const ReportedItem = () => {
     },
   });
 
-  console.log(products);
+  // console.log(products);
+
+  const handleDelete = (id) => {
+    const proceed = window.confirm("Are you sure? you want to delete");
+    if (proceed) {
+      fetch(`http://localhost:5000/products/${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.deletedCount > 0) {
+            toast.success("Product delete successfully");
+            refetch();
+          }
+        });
+    }
+  };
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -79,7 +96,12 @@ const ReportedItem = () => {
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Actions
                 </span>
-                <Link className="text-blue-400 hover:text-blue-600 underline pl-6">Remove</Link>
+                <button
+                  onClick={() => handleDelete(product._id)}
+                  className="text-blue-400 hover:text-blue-600 underline pl-6"
+                >
+                  Remove Product
+                </button>
               </td>
             </tr>
           ))}
