@@ -24,6 +24,9 @@ const Header = () => {
       <li>
         <Link to="/">Home</Link>
       </li>
+      <li>
+        <Link to="/products">Buses</Link>
+      </li>
       <li tabIndex={0}>
         <Link to="" className="justify-between">
           Bus Category

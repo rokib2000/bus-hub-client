@@ -8,7 +8,11 @@ const ProductSectionHome = ({ products, categoryName }) => {
       <div className="flex flex-col">
         <div className="flex justify-between">
           <h2 className="mb-4 text-2xl font-bold">{categoryName ? categoryName : "All"}</h2>
-          {/* <Link className="mb-4 text-xl font-semibold link link-primary">See All</Link> */}
+          {categoryName && (
+            <Link to="/products" className="mb-4 text-xl font-semibold link link-primary">
+              See All Buses
+            </Link>
+          )}
         </div>
         {products.length > 0 ? (
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
