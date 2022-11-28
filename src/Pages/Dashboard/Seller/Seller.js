@@ -42,6 +42,23 @@ const Seller = () => {
       });
   };
 
+  const handleDelete = (id) => {
+    const proceed = window.confirm("Are you sure? you want to delete");
+    if (proceed) {
+      fetch(`http://localhost:5000/users/${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.deletedCount > 0) {
+            toast.success("User delete successfully");
+            refetch();
+          }
+        });
+    }
+  };
+
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -109,7 +126,12 @@ const Seller = () => {
                 <button onClick={() => handleVerify(user?._id)} className="text-blue-400 hover:text-blue-600 underline">
                   verify
                 </button>
-                <Link className="text-blue-400 hover:text-blue-600 underline pl-6">Remove</Link>
+                <button
+                  onClick={() => handleDelete(user?._id)}
+                  className="text-blue-400 hover:text-blue-600 underline pl-6"
+                >
+                  Remove
+                </button>
               </td>
             </tr>
           ))}

@@ -43,9 +43,10 @@ const Login = () => {
           const name = googleUser.displayName;
           const email = googleUser.email;
           const image = googleUser.photoURL;
+          const uid = googleUser.uid;
           const accountType = "buyer";
 
-          const user = { name, email, image, accountType };
+          const user = { name, email, image, uid, accountType };
           fetch("http://localhost:5000/users", {
             method: "POST",
             headers: {

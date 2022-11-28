@@ -52,6 +52,11 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  //delete user
+  const deleteUser = () => {
+    return getAuth();
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("user observing");
@@ -63,7 +68,7 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const authInfo = { user, loading, createUser, updateUser, signIn, googleLogin, logOut };
+  const authInfo = { user, loading, createUser, updateUser, signIn, googleLogin, logOut, deleteUser };
 
   return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
 };

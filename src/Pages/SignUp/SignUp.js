@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const SignUp = () => {
   const { createUser, updateUser } = useContext(AuthContext);
+
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname ?? "/";
@@ -25,6 +26,12 @@ const SignUp = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+
+        // const uid = user.uid;
+
+        // toast.success("Account create successfully");
+        // navigate(from, { replace: true });
+        // form.reset();
         // toast.success("Account create successfully");
       })
       .catch((error) => {
@@ -44,13 +51,14 @@ const SignUp = () => {
       .then((imageData) => {
         if (imageData.success) {
           // console.log(imageData.data.url);
-          const userImage = imageData.data.url;
-          updateUserProfile(name, userImage);
+
+          const userImageData = imageData.data.url;
+          updateUserProfile(name, userImageData);
 
           // const userInfo = { displayName: name, photoURL: userImage };
 
-          //save data database
-          saveUser(name, email, userImage, accountType);
+          // //save data database
+          saveUser(name, email, userImageData, accountType);
           toast.success("Account create successfully");
           navigate(from, { replace: true });
           form.reset();

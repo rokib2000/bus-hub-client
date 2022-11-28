@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {
   const product = props.product;
-  console.log(product);
+  // console.log(product);
   const { OriginalPrice, category, condition, image, location, resellPrice, title, useYear, _id } = product;
   return (
     <div>

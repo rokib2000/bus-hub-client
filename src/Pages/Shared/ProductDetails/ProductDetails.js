@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import dateFormat from "dateformat";
 import toast from "react-hot-toast";
-import useUser from "../../../hooks/useUser";
 import Loading from "../Loading/Loading";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const ProductDetails = () => {
+  const { user } = useContext(AuthContext);
   const product = useLoaderData();
 
   const {
@@ -27,9 +28,32 @@ const ProductDetails = () => {
   } = product;
   const postDate = dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
 
-  const [user, isLoading] = useUser(sellerEmail);
-
   // console.log(user);
+  const handelOrder = () => {
+    const productId = _id;
+    const buyerEmail = user.email;
+    const buyerName = user.displayName;
+    const buyerImage = user.photoURL;
+    const order = { productId, title, category, image, resellPrice, sellerEmail, buyerEmail, buyerName, buyerImage };
+
+    fetch("http://localhost:5000/orders", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(order),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          toast.success("Order Successfully");
+        } else {
+          toast.error("Already Ordered");
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   const handleReport = () => {
     const status = "reported";
@@ -52,10 +76,6 @@ const ProductDetails = () => {
       })
       .catch((err) => toast.error(err.message));
   };
-
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
 
   return (
     <div className="container mx-auto my-14">
@@ -139,7 +159,9 @@ const ProductDetails = () => {
                   Report
                 </button>
 
-                <button className="btn  btn-primary w-full">Order Now</button>
+                <button onClick={handelOrder} className="btn  btn-primary w-full">
+                  Order Now
+                </button>
               </div>
             </div>
           </div>
