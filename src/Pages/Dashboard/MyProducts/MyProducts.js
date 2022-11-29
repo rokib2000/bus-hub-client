@@ -39,13 +39,33 @@ const MyProducts = () => {
     }
   };
 
+  const handleAdvertised = (id) => {
+    fetch(`http://localhost:5000/products/advertise/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ advertise: "advertised" }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          toast.success("Advertise Successfully");
+        } else {
+          toast.error("Already advertised");
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
   if (isLoading || loading) {
     return <Loading></Loading>;
   }
 
   return (
     <div className="w-[90%] mx-auto my-12">
-      <h1 className="text-4xl font-semibold my-6">Reported Item</h1>
+      <h1 className="text-4xl font-semibold my-6">My Products</h1>
 
       <table className="border-collapse w-full">
         <thead>
@@ -99,6 +119,12 @@ const MyProducts = () => {
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Actions
                 </span>
+                <button
+                  onClick={() => handleAdvertised(product._id)}
+                  className="text-blue-400 hover:text-blue-600 underline pl-6"
+                >
+                  Advertised
+                </button>
                 <button
                   onClick={() => handleDelete(product._id)}
                   className="text-blue-400 hover:text-blue-600 underline pl-6"
