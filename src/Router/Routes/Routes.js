@@ -5,6 +5,7 @@ import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
 import Buyer from "../../Pages/Dashboard/Buyer/Buyer";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import MyOrder from "../../Pages/Dashboard/MyOrder/MyOrder";
+import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
 import Orders from "../../Pages/Dashboard/Orders/Orders";
 import ReportedItem from "../../Pages/Dashboard/ReportedItem/ReportedItem";
 import Seller from "../../Pages/Dashboard/Seller/Seller";
@@ -103,6 +104,14 @@ const router = createBrowserRouter([
             element: (
               <SellerRoute>
                 <Orders></Orders>
+              </SellerRoute>
+            ),
+          },
+          {
+            path: "/dashboard/myProducts",
+            element: (
+              <SellerRoute>
+                <MyProducts></MyProducts>
               </SellerRoute>
             ),
           },

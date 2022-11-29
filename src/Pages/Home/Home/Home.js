@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BrandSection from "../../Shared/BrandSection/BrandSection";
 import ContactUs from "../../Shared/ContactUs/ContactUs";
+import Advertised from "../Advertised/Advertised";
 import Banner from "../Banner/Banner";
 import CategoryHome from "../CategoryHome/CategoryHome";
 import ProductSectionHome from "../ProductSectionHome/ProductSectionHome";
@@ -27,6 +28,7 @@ const Home = () => {
     <div>
       <Banner />
       <div className="container mx-auto">
+        <Advertised></Advertised>
         <CategoryHome handleCategoryData={handleCategoryData} />
         <ProductSectionHome products={products} categoryName={categoryName} />
         <BrandSection />

@@ -66,7 +66,7 @@ const Seller = () => {
   //   const { email, image, name } = users;
 
   return (
-    <div className="w-[90%] mx-auto">
+    <div className="w-[90%] mx-auto my-12">
       <h1 className="text-4xl font-semibold my-6">Seller</h1>
 
       <table className="border-collapse w-full">
