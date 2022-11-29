@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthProvider";
 import Loading from "../../Shared/Loading/Loading";
 
 const Seller = () => {
+  const { user, loading } = useContext(AuthContext);
+
   const {
     data: users = [],
     isLoading,
@@ -12,7 +14,11 @@ const Seller = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users?role=seller");
+      const res = await fetch(`http://localhost:5000/users?role=seller&email=${user?.email}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -59,7 +65,7 @@ const Seller = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || loading) {
     return <Loading></Loading>;
   }
 

@@ -9,7 +9,7 @@ const Login = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname ?? "/";
+  const from = location.state?.from?.pathname || "/";
 
   const handleSignIn = (event) => {
     event.preventDefault();
@@ -23,6 +23,25 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+
+        // get jwt
+        const currentUser = {
+          email: user.email,
+        };
+
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data.token);
+            localStorage.setItem("busHubToken", data.token);
+          });
+
         toast.success("Login successfully");
         navigate(from, { replace: true });
         form.reset();
@@ -57,6 +76,24 @@ const Login = () => {
             .then((res) => res.json())
             .then((data) => {
               console.log(data);
+            });
+
+          // get jwt
+          const currentUser = {
+            email: googleUser.email,
+          };
+
+          fetch("http://localhost:5000/jwt", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(currentUser),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data.token);
+              localStorage.setItem("busHubToken", data.token);
             });
 
           toast.success("Login successfully");

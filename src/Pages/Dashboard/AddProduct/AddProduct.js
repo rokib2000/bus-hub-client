@@ -70,10 +70,11 @@ const AddProduct = () => {
             date,
           };
 
-          fetch("http://localhost:5000/products", {
+          fetch(`http://localhost:5000/products?email=${user?.email}`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
             },
             body: JSON.stringify(product),
           })

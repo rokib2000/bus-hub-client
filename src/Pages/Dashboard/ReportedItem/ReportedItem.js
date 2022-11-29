@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../contexts/AuthProvider";
 import Loading from "../../Shared/Loading/Loading";
 
 const ReportedItem = () => {
+  const { user, loading } = useContext(AuthContext);
   const {
     data: products = [],
     isLoading,
@@ -11,7 +13,11 @@ const ReportedItem = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/products?status=reported");
+      const res = await fetch(`http://localhost:5000/products/reported?status=reported&email=${user?.email}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -36,7 +42,7 @@ const ReportedItem = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || loading) {
     return <Loading></Loading>;
   }
 

@@ -11,7 +11,7 @@ const Header = () => {
     logOut()
       .then(() => {
         // Sign-out successful.
-        // localStorage.removeItem("travelerToken");
+        localStorage.removeItem("busHubToken");
         toast.success("Logout Successfully!");
       })
       .catch((error) => {

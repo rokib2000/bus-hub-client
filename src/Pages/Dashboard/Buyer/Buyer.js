@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../contexts/AuthProvider";
 import Loading from "../../Shared/Loading/Loading";
 
 const Buyer = () => {
+  const { user, loading } = useContext(AuthContext);
   const {
     data: users = [],
     isLoading,
@@ -11,13 +13,17 @@ const Buyer = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users?role=buyer");
+      const res = await fetch(`http://localhost:5000/users?role=buyer&email=${user?.email}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
   });
 
-  //   console.log(users);
+  console.log(users);
 
   const handleDelete = (id) => {
     const proceed = window.confirm("Are you sure? you want to delete");
@@ -36,7 +42,7 @@ const Buyer = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || loading) {
     return <Loading></Loading>;
   }
 

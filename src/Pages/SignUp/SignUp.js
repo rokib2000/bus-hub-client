@@ -27,12 +27,23 @@ const SignUp = () => {
         const user = userCredential.user;
         console.log(user);
 
-        // const uid = user.uid;
+        // get jwt
+        const currentUser = {
+          email: user.email,
+        };
 
-        // toast.success("Account create successfully");
-        // navigate(from, { replace: true });
-        // form.reset();
-        // toast.success("Account create successfully");
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data.token);
+            localStorage.setItem("busHubToken", data.token);
+          });
       })
       .catch((error) => {
         const errorMessage = error.message;
