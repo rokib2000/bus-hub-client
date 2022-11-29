@@ -29,7 +29,7 @@ const Advertised = () => {
                 <img src={product.image} className=" rounded-lg shadow-2xl" alt="" />
                 <div>
                   <h1 className="text-2xl font-semibold">sponsored</h1>
-                  <h1 className="text-5xl font-bold">{product.title}</h1>
+                  <h1 className="text-5xl uppercase font-bold">{product.title}</h1>
                   <p className="py-6">{product.description}</p>
                   <Link to={`/products/${product._id}`} className="btn  btn-primary">
                     View Bus Details
