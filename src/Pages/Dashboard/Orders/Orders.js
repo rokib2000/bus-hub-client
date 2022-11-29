@@ -78,7 +78,7 @@ const Orders = () => {
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Status
                 </span>
-                xxxxxxxx
+                {order.paid && <span className="text-green-500">Paid</span>}
               </td>
             </tr>
           ))}

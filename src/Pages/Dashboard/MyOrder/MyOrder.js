@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import Loading from "../../Shared/Loading/Loading";
 
@@ -78,7 +79,15 @@ const MyOrder = () => {
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Action
                 </span>
-                <button className="text-blue-400 hover:text-blue-600 underline pl-6">Pay</button>
+                {order.price && !order.paid && (
+                  <Link
+                    to={`/dashboard/payment/${order._id}`}
+                    className="text-blue-400 hover:text-blue-600 underline pl-6"
+                  >
+                    Pay
+                  </Link>
+                )}
+                {order.paid && <span className="text-green-500">Paid</span>}
               </td>
             </tr>
           ))}

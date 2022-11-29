@@ -7,7 +7,7 @@ const useProductsData = (category) => {
     fetch(`http://localhost:5000/products/${category}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setProducts(data.isProducts);
         setIsLoading(false);
       });
