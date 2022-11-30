@@ -13,7 +13,7 @@ const Buyer = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/users?role=buyer&email=${user?.email}`, {
+      const res = await fetch(`https://bus-hub-server.vercel.app/users?role=buyer&email=${user?.email}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
         },
@@ -28,7 +28,7 @@ const Buyer = () => {
   const handleDelete = (id) => {
     const proceed = window.confirm("Are you sure? you want to delete");
     if (proceed) {
-      fetch(`http://localhost:5000/users/${id}`, {
+      fetch(`https://bus-hub-server.vercel.app/users/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

@@ -13,11 +13,14 @@ const ReportedItem = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/products/reported?status=reported&email=${user?.email}`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
-        },
-      });
+      const res = await fetch(
+        `https://bus-hub-server.vercel.app/products/reported?status=reported&email=${user?.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
+          },
+        }
+      );
       const data = await res.json();
       return data;
     },
@@ -28,7 +31,7 @@ const ReportedItem = () => {
   const handleDelete = (id) => {
     const proceed = window.confirm("Are you sure? you want to delete");
     if (proceed) {
-      fetch(`http://localhost:5000/products/${id}`, {
+      fetch(`https://bus-hub-server.vercel.app/products/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

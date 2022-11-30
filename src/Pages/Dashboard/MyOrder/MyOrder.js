@@ -9,11 +9,14 @@ const MyOrder = () => {
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/orders?buyerEmail=${user.email}&email=${user?.email}`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
-        },
-      });
+      const res = await fetch(
+        `https://bus-hub-server.vercel.app/orders?buyerEmail=${user.email}&email=${user?.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("busHubToken")}`,
+          },
+        }
+      );
       const data = await res.json();
       return data;
     },

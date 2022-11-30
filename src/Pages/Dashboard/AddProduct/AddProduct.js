@@ -10,7 +10,7 @@ const AddProduct = () => {
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/categories");
+      const res = await fetch("https://bus-hub-server.vercel.app/categories");
       const data = await res.json();
       return data;
     },
@@ -70,7 +70,7 @@ const AddProduct = () => {
             date,
           };
 
-          fetch(`http://localhost:5000/products?email=${user?.email}`, {
+          fetch(`https://bus-hub-server.vercel.app/products?email=${user?.email}`, {
             method: "POST",
             headers: {
               "content-type": "application/json",

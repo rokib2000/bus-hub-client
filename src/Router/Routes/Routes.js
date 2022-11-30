@@ -48,12 +48,12 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products></Products>,
-        loader: () => fetch(`http://localhost:5000/products`),
+        loader: () => fetch(`https://bus-hub-server.vercel.app/products`),
       },
       {
         path: "/products/:id",
         element: <ProductDetails></ProductDetails>,
-        loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`),
+        loader: ({ params }) => fetch(`https://bus-hub-server.vercel.app/products/${params.id}`),
       },
       {
         path: "/dashboard",
@@ -131,7 +131,7 @@ const router = createBrowserRouter([
                 <Payment></Payment>
               </BuyerRoute>
             ),
-            loader: ({ params }) => fetch(`http://localhost:5000/orders/${params.id}`),
+            loader: ({ params }) => fetch(`https://bus-hub-server.vercel.app/orders/${params.id}`),
           },
         ],
       },

@@ -32,7 +32,7 @@ const SignUp = () => {
           email: user.email,
         };
 
-        fetch("http://localhost:5000/jwt", {
+        fetch("https://bus-hub-server.vercel.app/jwt", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -87,7 +87,7 @@ const SignUp = () => {
 
   const saveUser = (name, email, image, accountType) => {
     const user = { name, email, image, accountType };
-    fetch("http://localhost:5000/users", {
+    fetch("https://bus-hub-server.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",

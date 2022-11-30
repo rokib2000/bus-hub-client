@@ -29,7 +29,7 @@ const Login = () => {
           email: user.email,
         };
 
-        fetch("http://localhost:5000/jwt", {
+        fetch("https://bus-hub-server.vercel.app/jwt", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -66,7 +66,7 @@ const Login = () => {
           const accountType = "buyer";
 
           const user = { name, email, image, uid, accountType };
-          fetch("http://localhost:5000/users", {
+          fetch("https://bus-hub-server.vercel.app/users", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -83,7 +83,7 @@ const Login = () => {
             email: googleUser.email,
           };
 
-          fetch("http://localhost:5000/jwt", {
+          fetch("https://bus-hub-server.vercel.app/jwt", {
             method: "POST",
             headers: {
               "content-type": "application/json",

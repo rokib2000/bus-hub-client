@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Navigate, useLoaderData } from "react-router-dom";
 import dateFormat from "dateformat";
 import toast from "react-hot-toast";
 import Loading from "../Loading/Loading";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const ProductDetails = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const product = useLoaderData();
 
   const {
@@ -36,7 +36,11 @@ const ProductDetails = () => {
     const buyerImage = user.photoURL;
     const order = { productId, title, category, image, resellPrice, sellerEmail, buyerEmail, buyerName, buyerImage };
 
-    fetch("http://localhost:5000/orders", {
+    if (!user) {
+      <Navigate to="/login"></Navigate>;
+    }
+
+    fetch("https://bus-hub-server.vercel.app/orders", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -58,7 +62,11 @@ const ProductDetails = () => {
   const handleReport = () => {
     const status = "reported";
 
-    fetch(`http://localhost:5000/products/${_id}`, {
+    if (!user) {
+      <Navigate to="/login"></Navigate>;
+    }
+
+    fetch(`https://bus-hub-server.vercel.app/products/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -76,6 +84,10 @@ const ProductDetails = () => {
       })
       .catch((err) => toast.error(err.message));
   };
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="container mx-auto my-14">

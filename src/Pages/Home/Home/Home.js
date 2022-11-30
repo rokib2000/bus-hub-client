@@ -11,7 +11,7 @@ const Home = () => {
   const [categoryName, setCategoryName] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/products?category=${categoryName}`)
+    fetch(`https://bus-hub-server.vercel.app/products?category=${categoryName}`)
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
