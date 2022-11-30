@@ -79,7 +79,10 @@ const MyOrder = () => {
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Action
                 </span>
-                {order.price && !order.paid && (
+
+                {order?.paid ? (
+                  <span className="text-green-500">Paid</span>
+                ) : (
                   <Link
                     to={`/dashboard/payment/${order._id}`}
                     className="text-blue-400 hover:text-blue-600 underline pl-6"
@@ -87,7 +90,6 @@ const MyOrder = () => {
                     Pay
                   </Link>
                 )}
-                {order.paid && <span className="text-green-500">Paid</span>}
               </td>
             </tr>
           ))}
